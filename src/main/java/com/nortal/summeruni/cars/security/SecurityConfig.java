@@ -14,9 +14,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     {
         http
                 .csrf().disable()
+                .authorizeRequests().antMatchers("/h2/**").permitAll()
+                .and()
                 .authorizeRequests().anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .httpBasic()
+                .and()
+                .headers().frameOptions().disable();
+
     }
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth)
@@ -28,3 +33,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .roles("ADMIN");
     }
 }
+
